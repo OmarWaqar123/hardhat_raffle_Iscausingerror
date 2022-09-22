@@ -114,7 +114,7 @@ const { assert, expect } = require("chai");
                   await network.provider.send("evm_mine", []);
                   const txResponse = await raffle.performUpkeep([]);
                   const txReciept = await txResponse.wait(1);
-                  const requestId = txReciept.events[1].args.requestId;
+                  const requestId = await txReciept.events[1].args.requestID;
                   const raffleState = await raffle.getRaffleState();
                   assert(requestId.toNumber() > 0);
                   assert(raffleState.toString() == "1");
