@@ -1,3 +1,9 @@
+//Raffle
+//Enter the lottery (by paying some amount)
+//Pick a random winner (verifiably random)
+//Winner to be selected every x minutes --> completly automated
+// Chainlink Oracle --> Randomness, Automated Execution (Chainlink Keepers)
+
 //SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.9;
@@ -78,7 +84,18 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
         emit RaffleEnter(msg.sender);
     }
 
+    /**
+ * _ @dev This is the function that the ChainLnk Keeper nodes call
+   _ they look for the `UpKeepNeeded` to return true
+   _ The following should be true in order to return true:
+   _ 1. Our time interval should have passed
+   _ 2. The lottery should have atleast 1 player, and have some ETH
+   _ 3. Our subscription is funded with link
+   _ 4. The lottery should be in an "Open" state.
+ */
+
     function checkUpkeep(
+        /*RequestRandomWinner*/
         bytes memory /*checkData*/
     )
         public
@@ -109,6 +126,10 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
             );
         }
         s_rafflestate = Rafflestate.CALCULATING;
+        //Request a random number
+        //One we get it, do something with it
+        //2 transaction process (if it was 1 transacation only then people could brute force it and try simmulating calling this transaction to manipulate to make sure they are the winner)
+        //requestRandomWords function returns a request ID of uint256 so it means we can store the return of this function in a variable.
 
         uint256 requestId = i_vrfcoordinator.requestRandomWords(
             i_gasLane, //or keyHash
@@ -125,6 +146,12 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
         uint256, /*requestId*/
         uint256[] memory randomWords
     ) internal override {
+        //Once we get the random nummber we're gonna pick a random number from our s_players array
+        // We're gonna use modulo function(%) here, because the random number that we're gonna get is like
+        //5645657878171852132131242343242455456565767676767688
+        //s_players size is 10 and
+        // random number is 200, so how are we gonna pick a random winner from this big random number, by using modulo function
+        // 202 % 10 = 2 ---> here the reminder is 2
         uint256 indexofWinner = randomWords[0] % s_players.length; //this will give us number between 0 and 10
         address payable recentWinner = s_players[indexofWinner];
         s_recentwinner = recentWinner;

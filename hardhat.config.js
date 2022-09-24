@@ -51,4 +51,13 @@ module.exports = {
         outputFile: "gasReporter.txt",
         noColors: true,
     },
+    //Now we dont wanna forever for the winnerPicked event to get resolve in raffle unit test therefore we add this timeout
+    mocha: {
+        timeout: 500000, //300000 millisecond or 300 seconds max.
+    },
+    etherscan: {
+        apiKey: {
+            goerli: ETHERSCAN_API_KEY,
+        },
+    },
 };
