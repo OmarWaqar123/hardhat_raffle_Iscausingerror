@@ -1,19 +1,5 @@
-This is the hardhat raffle smart contract . It is causing error
-while writing tests for `performUpkeep ` . In the test folder and in the Rfflee.test.js file at the line number 111
-you will a it with the description
-`"updates the raffle state, emits an event and calls the vrf coordinate function"`. this is the it which is causing error in its 2nd last line at `119` . the error is this.
+This project is a truly decentralized, autonomous, verifiably Random and a robust Lottery/Raffle smartcontract.
 
-```javascript
-TypeError: Cannot read properties of undefined (reading 'toNumber')
-```
+This contract allows the multiple user to enter the raffle by paying certain ammount of ETH and then and after a certain time this contract will automatically choose a Variably random winner among the players and all the lottery money go straight to that winner without any intervention of any human in between so that the authenticity of the raffle will maintain , all of the above processes mentioned above from entering the raffle to picking a random winner are all varifiable and one can easily varify the process on the blockchain.
 
-I've tried changing it from `toNumber()` to `toString()` but it still gives the same error with this message.
-
-```javascript
-TypeError: Cannot read properties of undefined (reading 'toString')
-```
-
-I've also tried adding `await` before `txReciept` at line no 117,
-But it still gives the same error.
-
-I don't know what is the error and how to fix it, if you have any solution to this problem then please let me know.
+This purpose of this project is to create a truly fair, decentralized, autonomous and Variably random lottery system that everyody can trust.

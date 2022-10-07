@@ -15,6 +15,7 @@ const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY;
 
 // const GOERLI_RPC_URL = process.env.GOERLI_RPC_URL;
 const GOERLI_PRIVATEKEY = process.env.GOERLI_PRIVATEKEY;
+const GOERLI_RPC_URL = process.env.GOERLI_RPC_UR;
 
 module.exports = {
     solidity: "0.8.9",
@@ -33,7 +34,7 @@ module.exports = {
         Goerli: {
             chainId: 5,
             blockConfirmations: 6,
-            url: "https://eth-goerli.g.alchemy.com/v2/ju555foCrspGNOeM2u4QmP7K8j9VxGXY",
+            url: GOERLI_RPC_URL,
             accounts: [GOERLI_PRIVATEKEY],
         },
     },

@@ -7,8 +7,8 @@ const networkConfig = {
         //we are gonna make  entranceFee dynamic meaning if we are on a expensive chain then entranceFee will be more
         entranceFee: ethers.utils.parseEther("0.02"),
         gasLane: "0x79d3d8832d904592c0bf9818b621522c988bb8b0c05cdc3b15aea1b6e8db0c15",
-        subscriptionId: "2340",
-        callbackGasLimit: "5000000",
+        subscriptionId: "3637",
+        callbackGasLimit: "500000",
         interval: "30", //30 seconds
     },
     31337: {

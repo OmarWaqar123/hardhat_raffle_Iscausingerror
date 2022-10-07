@@ -1,17 +1,15 @@
-const { assert } = require("chai");
+const { assert, expect } = require("chai");
 const { network, getNamedAccounts, deployments, ethers } = require("hardhat");
 const { DevelopmentChains, networkConfig } = require("../../../helper-hardhat-config");
 
 DevelopmentChains.includes(network.name)
     ? describe.skip
     : describe("raffle staging test", function () {
-          let deployer, raffleentranceFee, interval, raffle;
-          const ChainId = network.config.chainId;
+          let deployer, raffleentranceFee, raffle;
 
           beforeEach(async function () {
               deployer = (await getNamedAccounts()).deployer;
               raffle = await ethers.getContract("Raffle", deployer);
-              interval = await raffle.getInterval();
               raffleentranceFee = await raffle.getentranceFee();
           });
 
@@ -24,7 +22,7 @@ DevelopmentChains.includes(network.name)
                   // do that with the deployer variable we declared above in before each, cause it just won't work so  we're gonna that by accounts[0] which is same as deployer
 
                   // we wanna enter the raffle by raffle.enterraffle({value: fee}), but we don't wanna do it yet we first have to setup the listner first.
-                  //Just incase the blockchain moves REALLY FAST the reason we enteer the raffle before we set up the listner in unit test was because we could blockchain so it was okay there.
+                  //Just incase the blockchain moves REALLY FAST the reason we enteer the raffle before we set up the listner in unit test was because we could conrtrol the blockchain so it was okay there.
                   await new Promise(async (resolve, reject) => {
                       raffle.once("WinnerPicked", async () => {
                           console.log("waiting");
@@ -44,8 +42,8 @@ DevelopmentChains.includes(network.name)
                                   winnerStartingBalance.add(raffleentranceFee).toString()
                               );
                               resolve();
-                          } catch (e) {
-                              reject(e);
+                          } catch (error) {
+                              reject(error);
                           }
                       });
                       console.log("entering Raffle");
